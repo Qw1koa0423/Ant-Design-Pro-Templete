@@ -11,6 +11,29 @@
 
 请修改`package.json`中的git地址
 
+## 配置文件
+
+开发的时候在config下面建立一个`config.local.ts`文件
+
+```javascript
+// https://umijs.org/config/
+import { defineConfig } from '@umijs/max';
+
+export default defineConfig({
+  define: {
+    API_URL: '你的YAPI地址', // API地址
+  },
+});
+
+```
+
+如果使用`YAPI`地址，开发运行命令`yarn start`
+
+使用开发地址，开发运行命令`Yarn dev` 默认是`alpha`的配置
+
+
+
+
 ## 开发规范
 
 - **Commit messages**
