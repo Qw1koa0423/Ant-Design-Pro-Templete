@@ -1,0 +1,20 @@
+branches:
+  - master
+  - name: hotfix
+    prerelease: rc
+  - name: release
+    prerelease: beta
+plugins:
+  - '@semantic-release/commit-analyzer'
+  - '@semantic-release/release-notes-generator'
+  - - '@semantic-release/changelog'
+    - changelogFile: CHANGELOG.md
+  - - '@semantic-release/exec'
+    - publishCmd: make install branch=$CI_COMMIT_REF_NAME
+      successCmd: curl -H "Content-Type:application/json" -X POST -d '{"msg_type":"text","content":{"text":"部署成功：paas-dashboard（${nextRelease.version}）"}}' https://open.feishu.cn/open-apis/bot/v2/hook/0886b918-2cde-43f1-9406-3632ce11828a
+      failCmd: curl -H "Content-Type:application/json" -X POST -d '{"msg_type":"text","content":{"text":"部署失败：paas-dashboard（${nextRelease.version}），请检查CI"}}' https://open.feishu.cn/open-apis/bot/v2/hook/0886b918-2cde-43f1-9406-3632ce11828a
+  - - '@semantic-release/gitlab'
+    - gitlabUrl: http://gitlab.topdrink.net
+  - - '@semantic-release/git'
+    - assets:
+        - CHANGELOG.md
